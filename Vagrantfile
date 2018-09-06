@@ -55,7 +55,10 @@ Vagrant.configure(2) do |config|
       node.vm.provider "virtualbox" do |vb|
         vb.memory = "256"
       end
-      node.vm.provision :shell, path: "provision/nodes.sh"
+      node.vm.provision :shell,
+      :path => "provision/nodes.sh",
+      :args => [chef_network]
+
     end
   end
 
