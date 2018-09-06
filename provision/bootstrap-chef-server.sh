@@ -2,9 +2,9 @@
 __default_user='testlab@testlab.com'
 __default_password='password'
 __default_network='10.0.15'
-export CHEF_USER=${1:-__default_user}
-export CHEF_PASS=${2:-__default_password}
-export CHEFF_NETWORK=${3:-__default_network}
+export CHEF_USER=${1:-$__default_user}
+export CHEF_PASS=${2:-$__default_password}
+export CHEFF_NETWORK=${3:-$__default_network}
 #
 export DISTRIB_CODENAME=$(awk -F'=' '/DISTRIB_CODENAME=/{print $2}'  /etc/*-release)
 [[ "x${DISTRIB_CODENAME}" = "x" ]] && export DISTRIB_CODENAME="trusty"

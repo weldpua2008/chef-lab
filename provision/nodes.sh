@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 __default_network='10.0.15'
-export CHEFF_NETWORK=${1:-__default_network}
+export CHEFF_NETWORK=${1:-$__default_network}
 
 localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 > /dev/null
 grep -qw LANG /etc/environment || echo 'LANG=en_US.utf-8'>> /etc/environment
