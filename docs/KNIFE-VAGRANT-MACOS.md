@@ -68,3 +68,120 @@ git clone https://github.com/learn-chef/learn_chef_apache2.git
 ssh-keygen -R web1
 knife bootstrap web1 --ssh-user  vagrant --ssh-password 'vagrant' --ssh-port 22 --sudo  --node-name web1 --run-list 'recipe[learn_chef_apache2]'
 ```
+
+Use from your macOS connection via hostname instead of ip address
+
+```
+knife ssh 'name:web1' 'sudo chef-client' --ssh-user vagrant --ssh-password 'vagrant' --attribute hostname
+```
+
+5). Manage Berkshelf
+
+5.1). Create `~/learn-chef/Berksfile`
+```
+source 'https://supermarket.chef.io'
+cookbook 'chef-client'
+```
+
+5.2). Upload on Chef Server
+```
+berks install
+ls ~/.berkshelf/cookbooks
+berks upload --no-ssl-verify
+```
+
+    Berkshelf requires a trusted SSL certificate in order to upload cookbooks. The --no-ssl-verify flag disables SSL verification, which is typically fine for testing purposes. Chef server comes with a self-signed SSL certificate. For production, you might use a trusted SSL certificate. The documentation describes how Chef server works with SSL certificates.
+
+
+6). Creating Roles
+Create folder
+```mkdir ~/learn-chef/roles ```
+Now add the following to a file named `~/learn-chef/roles/web.json`.
+```json
+{
+   "name": "web",
+   "description": "Web server role.",
+   "json_class": "Chef::Role",
+   "default_attributes": {
+     "chef_client": {
+       "interval": 300,
+       "splay": 60
+     }
+   },
+   "override_attributes": {
+   },
+   "chef_type": "role",
+   "run_list": ["recipe[chef-client::default]",
+                "recipe[chef-client::delete_validation]",
+                "recipe[learn_chef_apache2::default]"
+   ],
+   "env_run_lists": {
+   }
+}
+```
+
+Define Role `web`
+```$ knife role from file roles/web.json
+Updated Role web
+```
+As a verification step, you can run knife role list to view the roles on your Chef server.
+
+```$ knife role list
+web
+```
+
+You can also run knife `role show web` to view the role's details.
+```
+knife role show web
+chef_type:           role
+default_attributes:
+  chef_client:
+    interval: 300
+    splay:    60
+description:         Web server role.
+env_run_lists:
+json_class:          Chef::Role
+name:                web
+override_attributes:
+run_list:
+  recipe[chef-client::default]
+  recipe[chef-client::delete_validation]
+  recipe[learn_chef_apache2::default]
+```
+
+The final step is to set your node's run-list. Run the following `knife node run_list set` command to do that.
+```
+$ knife node run_list set web1 "role[web]"
+web1:
+  run_list: role[web]
+
+```
+
+As a verification step, you can run the `knife node show` command to view your node's run-list.
+```
+$ knife node show web1 --run-list
+web1:
+  run_list: role[web]
+```
+
+Run chef-client
+```
+$ knife ssh 'name:web1' 'sudo chef-client' --ssh-user vagrant --ssh-password 'vagrant' --attribute hostname
+```
+
+You can see from the output that the chef-client cookbook set up chef-client as a service on your node.
+
+You can run the knife status command to display a brief summary of the nodes on your Chef server, including the time of the most recent successful chef-client run.
+
+```
+$ knife status 'role:web' --run-list
+36 seconds ago, web1, ["role[web]"], ubuntu 14.04.
+```
+Now that chef-client is set up to run every 5—6 minutes, now's a great time to experiment with your node. 
+
+
+
+[Show Node Info as raw JSON data](https://docs.chef.io/knife_node.html)
+> To view node information in raw JSON, use the `-l` or `--long` option:
+
+```knife node show -l -F json NODE_NAME```
