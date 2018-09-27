@@ -22,3 +22,6 @@ This would be the end result of this provisioning:
 ## Steps by OS
 * [Windows](docs\README-WINDOWS.md)
 * [macOS](docs\README-MACOS.md)
+
+## Configuration Knife
+* [macOS](docs\KNIFE-VAGRANT-MACOS.md)
