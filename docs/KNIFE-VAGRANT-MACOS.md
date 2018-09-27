@@ -24,7 +24,7 @@ ssh-copy-id vagrant@100.64.0.10
 2). Copy RSA private key
 
 ```bash
-scp vagrant@100.64.0.10:/home/vagrant/certs/testlabdev.pem  ~/learn-chef/.chef/chefadmin.pem
+scp vagrant@100.64.0.10:/home/vagrant/certs/testlabdev.pem  ~/learn-chef/.chef/testlabdev.pem
 ```
 
 3). Crete knife configuration file
@@ -34,8 +34,8 @@ Add this to your knife configuration file, `~/learn-chef/.chef/knife.rb`. Then r
 current_dir = File.dirname(__FILE__)
 log_level                 :info
 log_location              STDOUT
-node_name                 "chefadmin"
-client_key                "#{current_dir}/chefadmin.pem"
+node_name                 "testlabdev"
+client_key                "#{current_dir}/testlabdev.pem"
 chef_server_url           "https://chef-server/organizations/testcheflab"
 cookbook_path             ["#{current_dir}/../cookbooks"]```
 
@@ -56,4 +56,15 @@ Adding certificate for chef-server in /Users/weldpua2008/learn-chef/.chef/truste
 $ knife ssl check
 Connecting to host chef-server:443
 Successfully verified certificates from `chef-server'
+```
+
+
+PS:
+You can use the following for https://learn.chef.io/modules/manage-a-node-chef-server/ubuntu/bring-your-own-system/bootstrap-your-node#/:
+```
+mkdir ~/learn-chef/cookbooks
+cd ~/learn-chef/cookbooks
+git clone https://github.com/learn-chef/learn_chef_apache2.git
+ssh-keygen -R web1
+knife bootstrap web1 --ssh-user  vagrant --ssh-password 'vagrant' --ssh-port 22 --sudo  --node-name web1 --run-list 'recipe[learn_chef_apache2]'
 ```

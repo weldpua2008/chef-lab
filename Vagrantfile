@@ -56,10 +56,25 @@ Vagrant.configure(2) do |config|
         vb.memory = "256"
       end
       node.vm.provision :shell,
-      :path => "provision/nodes.sh",
+      :path => "provision/nodes-rhel.sh",
       :args => [chef_network]
 
     end
   end
 
+  (1..1).each do |i|
+    config.vm.define "web#{i}" do |node|
+      node.vm.box = "bento/ubuntu-14.04"
+      node.vm.hostname = "web#{i}"
+      node.vm.network :private_network, ip: "#{chef_network}.2#{i}"
+      node.vm.network "forwarded_port", guest: 80, host: "808#{i}"
+      node.vm.provider "virtualbox" do |vb|
+        vb.memory = "256"
+      end
+      node.vm.provision :shell,
+      :path => "provision/nodes-ubuntu.sh",
+      :args => [chef_network]
+
+    end
+  end
 end
