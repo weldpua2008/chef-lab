@@ -200,6 +200,17 @@ $ knife status 'role:web' --run-list
 ```
 Now that chef-client is set up to run every 5—6 minutes, now's a great time to experiment with your node.
 
+### Update a local virtual machine using a forwarded port
+Replace `PORT` with your SSH forwarded port, for example, `2222`, and `IDENTITY_FILE` with your SSH identify file, for example `/home/user/.vagrant/machines/default/virtualbox/private_key`.
+
+```bash
+$ knife ssh localhost --ssh-port PORT 'sudo chef-client' --ssh-user vagrant --identity-file IDENTITY_FILE --manual-list
+
+```
+### [Way to make it so Chef Ohai sets ipaddress to the host-only network address](https://github.com/hashicorp/vagrant/issues/2793)
+`config.vm.network :private_network, ip: "192.168.67.3"` in the `Vagrantfile` will have `Chef Ohai` reporte `node[:ipaddress]` to be 192.168.67.3 and not the NAT's 10.0.x.x address.
+
+Ohai reports the IP address of the default route. If you create a public network and assign the `:use_dhcp_assigned_default_route => true` setting it will pick the correct address.
 
 
 [Show Node Info as raw JSON data](https://docs.chef.io/knife_node.html)
