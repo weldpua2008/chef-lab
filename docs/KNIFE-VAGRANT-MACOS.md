@@ -74,6 +74,7 @@ knife bootstrap web1 --ssh-user  vagrant --ssh-password 'vagrant' --ssh-port 22 
     If you're working with an Amazon EC2, Microsoft Azure, or Google Compute Engine instance, replace the ipaddress part of the `--attribute ipaddress` argument with the corresponding entry from this table.
 
 
+
 |Cloud provider| Attribute|	Notes|
 |---|---|---|
 |EC2|	`cloud.public_hostname`	|Chef sets this attribute during the bootstrap process.|
