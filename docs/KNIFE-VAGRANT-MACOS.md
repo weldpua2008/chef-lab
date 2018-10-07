@@ -69,8 +69,8 @@ ssh-keygen -R web1
 knife bootstrap web1 --ssh-user  vagrant --ssh-password 'vagrant' --ssh-port 22 --sudo  --node-name web1 --run-list 'recipe[learn_chef_apache2]'
 ```
 
-    Because of private ip is the first interface in Vagrant append the `--json-attributes` argument to the end of your knife bootstrap command in this format:
-    ```--json-attributes '{"cloud": {"public_ip": "NODE_PUBLIC_IP_ADDRESS"}}'```
+Because of private ip is the first interface in Vagrant append the `--json-attributes` argument to the end of your knife bootstrap command in this format:
+```--json-attributes '{"cloud": {"public_ip": "NODE_PUBLIC_IP_ADDRESS"}}'```
 
 
 If you're working with an Amazon EC2, Microsoft Azure, or Google Compute Engine instance, replace the ipaddress part of the `--attribute ipaddress` argument with the corresponding entry from this table.
