@@ -140,12 +140,14 @@ Now add the following to a file named `~/learn-chef/roles/web.json`.
 ```
 
 Define Role `web`
-```$ knife role from file roles/web.json
+```
+$ knife role from file roles/web.json
 Updated Role web
 ```
 As a verification step, you can run knife role list to view the roles on your Chef server.
 
-```$ knife role list
+```
+$ knife role list
 web
 ```
 
