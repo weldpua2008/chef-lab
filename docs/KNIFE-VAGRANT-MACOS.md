@@ -49,10 +49,9 @@ directory (/Users/weldpua2008/learn-chef/.chef/trusted_certs).
 
 Knife has no means to verify these are the correct certificates. You should
 verify the authenticity of these certificates after downloading.
-
-Adding certificate for chef-server in /Users/weldpua2008/learn-chef/.chef/trusted_certs/chef-server.crt
 ```
 
+Adding certificate for chef-server in /Users/weldpua2008/learn-chef/.chef/trusted_certs/chef-server.crt
 ```
 $ knife ssl check
 Connecting to host chef-server:443
