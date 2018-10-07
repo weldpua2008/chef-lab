@@ -71,8 +71,8 @@ knife bootstrap web1 --ssh-user  vagrant --ssh-password 'vagrant' --ssh-port 22 
     __NOTE:  Because of private ip is the first interface in Vagrant append the `--json-attributes` argument to the end of your knife bootstrap command in this format:__
     ```--json-attributes '{"cloud": {"public_ip": "NODE_PUBLIC_IP_ADDRESS"}}'```
 
-    If you're working with an Amazon EC2, Microsoft Azure, or Google Compute Engine instance, replace the ipaddress part of the `--attribute ipaddress` argument with the corresponding entry from this table.
 
+If you're working with an Amazon EC2, Microsoft Azure, or Google Compute Engine instance, replace the ipaddress part of the `--attribute ipaddress` argument with the corresponding entry from this table.
 
 
 |Cloud provider| Attribute|	Notes|
