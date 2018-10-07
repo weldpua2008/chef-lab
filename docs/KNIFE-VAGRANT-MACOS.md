@@ -68,6 +68,17 @@ git clone https://github.com/learn-chef/learn_chef_apache2.git
 ssh-keygen -R web1
 knife bootstrap web1 --ssh-user  vagrant --ssh-password 'vagrant' --ssh-port 22 --sudo  --node-name web1 --run-list 'recipe[learn_chef_apache2]'
 ```
+    __NOTE:  Because of private ip is the first interface in Vagrant append the `--json-attributes` argument to the end of your knife bootstrap command in this format:__
+    ```--json-attributes '{"cloud": {"public_ip": "NODE_PUBLIC_IP_ADDRESS"}}'```
+
+    If you're working with an Amazon EC2, Microsoft Azure, or Google Compute Engine instance, replace the ipaddress part of the `--attribute ipaddress` argument with the corresponding entry from this table.
+    |Cloud provider| Attribute|	Notes|
+    |EC2|	`cloud.public_hostname`	|Chef sets this attribute during the bootstrap process.|
+    |Azure|	`cloud.public_ip`|This is the attribute you set in the previous part when you bootstrapped your node.|
+    |Compute Engine|	cloud_v2.public_ipv4|	Chef sets this attribute during the bootstrap process.|
+
+
+
 
 Use from your macOS connection via hostname instead of ip address
 
@@ -177,7 +188,7 @@ You can run the knife status command to display a brief summary of the nodes on 
 $ knife status 'role:web' --run-list
 36 seconds ago, web1, ["role[web]"], ubuntu 14.04.
 ```
-Now that chef-client is set up to run every 5—6 minutes, now's a great time to experiment with your node. 
+Now that chef-client is set up to run every 5—6 minutes, now's a great time to experiment with your node.
 
 
 

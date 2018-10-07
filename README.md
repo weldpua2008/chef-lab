@@ -25,3 +25,49 @@ This would be the end result of this provisioning:
 
 ## Configuration Knife
 * [macOS](docs\KNIFE-VAGRANT-MACOS.md)
+
+
+## Fixing Isuses
+
+### Could not load the 'vagrant' driver from the load path.
+```
+$ kitchen list
+>>>>>> ------Exception-------
+>>>>>> Class: Kitchen::ClientError
+>>>>>> Message: Could not load the 'vagrant' driver from the load path. Please ensure that your driver is installed as a gem or included in your Gemfile if using Bundler.
+>>>>>> ----------------------
+>>>>>> Please see .kitchen/logs/kitchen.log for more details
+>>>>>> Also try running `kitchen diagnose --all` for configuration
+```
+check versions
+```
+$ vagrant --version
+Vagrant 2.1.4
+$ chef gem list kitchen-vagrant
+
+*** LOCAL GEMS ***
+
+kitchen-vagrant (1.3.2)
+
+chef -v && kitchen -v && chef gem list inspec
+
+```
+#### [Reinstall chefdk](https://docs.chef.io/uninstall.html)
+Use the following commands to remove the Chef development kit on macOS.
+
+```
+sudo rm -rf /opt/chefdk
+sudo pkgutil --forget com.getchef.pkg.chefdk
+sudo find /usr/local/bin -lname '/opt/chefdk/*' -delete
+sudo find /usr/bin -lname '/opt/chefdk/*' -delete
+sudo gem list|grep chef
+sudo gem uninstall chef chef-config chef-zero
+sudo gem list|grep knife
+```
+
+If no Help, Check  https://github.com/berkshelf/berkshelf/issues/1755
+```
+sudo gem install kitchen-inspec
+sudo gem install berkshelf -v 6.3.2
+
+```
