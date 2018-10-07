@@ -68,6 +68,7 @@ git clone https://github.com/learn-chef/learn_chef_apache2.git
 ssh-keygen -R web1
 knife bootstrap web1 --ssh-user  vagrant --ssh-password 'vagrant' --ssh-port 22 --sudo  --node-name web1 --run-list 'recipe[learn_chef_apache2]'
 ```
+
     __NOTE:  Because of private ip is the first interface in Vagrant append the `--json-attributes` argument to the end of your knife bootstrap command in this format:__
     ```--json-attributes '{"cloud": {"public_ip": "NODE_PUBLIC_IP_ADDRESS"}}'```
 
