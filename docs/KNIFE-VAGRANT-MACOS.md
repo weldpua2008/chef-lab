@@ -83,6 +83,7 @@ If you're working with an Amazon EC2, Microsoft Azure, or Google Compute Engine 
 | EC2 |	`cloud.public_hostname`	| Chef sets this attribute during the bootstrap process. |
 | Azure |	`cloud.public_ip` | This is the attribute you set in the previous part when you bootstrapped your node. |
 | Compute Engine |	 `cloud_v2.public_ipv4` |	Chef sets this attribute during the bootstrap process. |
+|  |  |  |
 
 
 
